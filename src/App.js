@@ -1,25 +1,55 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { Component } from 'react';
+import AudioAnalyser from './components/AudioAnalyser';
+import Coco from './components/Coco';
 
-function App() {
-  return (
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      audio: null
+    };
+
+    this.toggleMic = this.toggleMic.bind(this);
+  }
+
+  async getMic() {
+    const audio = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: false,
+    });
+
+    this.setState({ audio });
+  }
+
+  stopMic () {
+    this.state.audio.getTracks().forEach(track => track.stop());
+    this.setState({ 
+      audio: null
+    });
+  }
+
+  toggleMic () {
+    this.state.audio ? this.stopMic() : this.getMic();
+  }
+
+  render () {
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div class="container my-5">
+        <h1 class="title is-size-1">Coco Visualiser</h1>
+      </div>
+      <div className="controls">
+        <div>
+          { this.state.audio ? <AudioAnalyser audio={this.state.audio}/> : <Coco /> }
+        </div>
+        <button onClick={this.toggleMic} class={this.state.audio ? 'button is-light is-danger' : 'button is-light is-info'}>
+          {this.state.audio ? 'Stop It' : 'Sing for Coco'}
+        </button>
+      </div>
     </div>
   );
+  }
 }
 
 export default App;

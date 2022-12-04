@@ -1,3 +1,5 @@
+@import url('https://lf32.github.io/cdn/bulma/bulma.min.0.9.4.css');
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +12,21 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+main {
+  min-height: 100vh;
+}
+
+main .controls {
+  text-align: center;
+  padding: 0.5em 0;
+  background: #333e5a;
+  color: #fff;
+}
+
+main canvas {
+  padding: 20px;
+  margin: 0 auto;
+  display: flex;
 }
